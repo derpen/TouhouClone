@@ -5,10 +5,10 @@ using UnityEngine;
 public class ShootBullets : MonoBehaviour
 {
     public GameObject circlePrefab;
-    public float bulletDamage = 15f;
+    public float bulletDamage = 4f;
 
-    private float moveSpeed = 75f;
-    private float spawnInterval = 0.5f;
+    private float moveSpeed = 150f;
+    private float spawnInterval = 0.05f;
     private float timer = 0f;
 
     void Start()

@@ -5,33 +5,49 @@ using UnityEngine;
 public class EnemyShoot : MonoBehaviour
 {
     public GameObject enemyBullet;
+    private float bulletMoveSpeed = 35f;
+    
+    private float shootInterval = 4f;
+    private float sessionInterval = 3f;
 
-    private float bulletMoveSpeed = 25f;
-    private float timer = 0f;
-    private float spawnInterval = 0.25f;
-    private float moveSpeed = 25f;
+    private float timerShoot = 0f;
+    private float timerSession = 0f;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+       timerShoot = shootInterval;
     }
 
     // Update is called once per frame
     void Update()
     {
-        timer += Time.deltaTime;
+        timerShoot += Time.deltaTime;
 
-        if (timer >= spawnInterval)
+        // Check if it's time to shoot
+        if (timerShoot >= shootInterval)
         {
-            // reset bullet timer
-            timer = 0f;
+            timerSession += Time.deltaTime;
 
-            Vector3 enemyPos = transform.position;
-            enemyPos.y = enemyPos.y - 5f;
-            GameObject bullet = Instantiate(enemyBullet, enemyPos, Quaternion.identity);
-            Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
-            rb.velocity = Vector2.down * bulletMoveSpeed;
+            // Check if it's time to stop shooting
+            if (timerSession >= sessionInterval)
+            {
+                timerSession = 0f;
+                timerShoot = 0f;
+            }
+            else
+            {
+                Shoot();
+            }
         }
+    }
+
+    private void Shoot()
+    {
+        Vector3 enemyPos = transform.position;
+        enemyPos.y = enemyPos.y - 5f;
+        GameObject bullet = Instantiate(enemyBullet, enemyPos, Quaternion.identity);
+        Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
+        rb.velocity = Vector2.down * bulletMoveSpeed;
     }
 }

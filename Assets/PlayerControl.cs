@@ -24,4 +24,20 @@ public class PlayerControl : MonoBehaviour
             player.position = touchPosition;
         }
     }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("EnemyBullet"))
+        {
+            // Destroy the bullet
+            Destroy(collision.gameObject);
+
+            // Damage the enemy or destroy it
+            health -= 50;
+            if (health <= 0)
+            {
+                Destroy(gameObject);
+            }
+        }
+    }
 }

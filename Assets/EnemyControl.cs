@@ -19,6 +19,9 @@ public class EnemyControl : MonoBehaviour
     // Might put this in another script to only call it once
     private float leftEdge;
     private float rightEdge;
+
+    private SpriteRenderer spriteRenderer; // Reference to the sprite renderer component
+    private Color originalColor; // The original color of the sprite
     
     // Start is called before the first frame update
     void Start()
@@ -38,6 +41,11 @@ public class EnemyControl : MonoBehaviour
         cameraHeight = Camera.main.orthographicSize * 2f;
         leftEdge = Camera.main.ViewportToWorldPoint(new Vector3(0, 0, 0)).x;
         rightEdge = Camera.main.ViewportToWorldPoint(new Vector3(1, 0, 0)).x;
+
+        // Get the sprite renderer component
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        // Save the original color of the sprite
+        originalColor = spriteRenderer.color;
     }
 
     // Update is called once per frame
@@ -83,6 +91,21 @@ public class EnemyControl : MonoBehaviour
             {
                 Destroy(gameObject);
             }
+
+            // Change the color of the sprite to red for a split second
+            StartCoroutine(FlashRed());
         }
-}
+    }
+
+    IEnumerator FlashRed()
+    {
+        // Set the color of the sprite to red
+        spriteRenderer.color = Color.red;
+
+        // Wait for a split second
+        yield return new WaitForSeconds(0.001f);
+
+        // Change the color of the sprite back to the original color
+        spriteRenderer.color = originalColor;
+    }
 }

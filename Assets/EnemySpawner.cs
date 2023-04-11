@@ -6,7 +6,7 @@ public class EnemySpawner : MonoBehaviour
 {
     public GameObject enemy;
 
-    private float spawnInterval = 9f;
+    private float spawnInterval = 6.7f;
     private float cameraHeight;
     private float cameraWidth;
     private float randomX;

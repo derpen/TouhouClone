@@ -7,7 +7,14 @@ public class BulletControl : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        // Find all game objects with the tag "EnemyBullet"
+        GameObject[] enemyBullets = GameObject.FindGameObjectsWithTag("EnemyBullet");
+
+        // Loop through all the enemy bullets and ignore collision with them
+        foreach (GameObject enemyBullet in enemyBullets)
+        {
+            Physics2D.IgnoreCollision(GetComponent<Collider2D>(), enemyBullet.GetComponent<Collider2D>());
+        }
     }
 
     // Update is called once per frame
